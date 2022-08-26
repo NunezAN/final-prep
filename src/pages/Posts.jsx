@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const Posts = () => {
-  let navigate = useNavigate();
   const { id } = useParams();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,6 +13,7 @@ const Posts = () => {
     const { data } = await axios.get(
       `https://jsonplaceholder.typicode.com/posts?userId=${userId || id }`
     );
+    console.log(data);
     setPosts(data);
     setLoading(false);
   }
@@ -29,7 +29,9 @@ const Posts = () => {
   return (
     <>
       <div className="post__search">
-        <button onClick={()=>navigate("/")}>← Back</button>
+        <Link to={"/"}>
+        <button>← Back</button>
+        </Link>
         <form className="post__search--container" onSubmit={(event) => onSearchId(event)}>
           <label className="post__search--label">Search by Id</label>
           <input
