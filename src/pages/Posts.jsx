@@ -4,20 +4,28 @@ import axios from "axios";
 
 const Posts = () => {
   const { id } = useParams();
-  const [title, setTitle] = useState("");
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     async function fetchposts() {
       const { data } = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/${id}`
+        `https://jsonplaceholder.typicode.com/posts?userId=${id}`
       );
-      setTitle(data.title);
-      console.log(data);
+      setPosts(data);
     }
     fetchposts();
   }, []);
 
-  return <div>{title}</div>;
+  return (
+    <div>
+      {posts.map((post) => (
+        <p key={post.id}>
+          {post.title}
+          <br />
+        </p>
+      ))}
+    </div>
+  );
 };
 
 export default Posts;
